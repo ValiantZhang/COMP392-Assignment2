@@ -24,14 +24,23 @@ import Vector3 = THREE.Vector3;
 
 //Custom Game Objects
 import gameObject = objects.gameObject;
-
 var scene: Scene;
 var renderer: Renderer;
 var camera: PerspectiveCamera;
 var axes: AxisHelper;
 var sphere: Mesh;
 var plane: Mesh;
-var blobbyBoy: gameObject;
+
+//Planets
+var planetVegeta;
+var planetNamek;
+var planetKai;
+var planetHera;
+var planetFrieza;
+var moon79;
+var planetFriezaPivot;
+
+//Meshes
 var sphere: Mesh;
 var sphereMaterial : MeshLambertMaterial;
 var sphereMaterial : MeshLambertMaterial;
@@ -42,8 +51,13 @@ var kaiMaterial : MeshLambertMaterial;
 var heraMaterial : MeshLambertMaterial;
 var friezaMaterial : MeshLambertMaterial;
 var moon79Material : MeshLambertMaterial;
+var shirtTexture = THREE.ImageUtils.loadTexture( "../../Assets/Textures/plaid.jpg" );
+
+//Lights
 var ambientLight: AmbientLight;
 var spotLight: SpotLight;
+
+//Controls
 var control: Control;
 var gui: GUI;
 var stats: Stats;
@@ -51,7 +65,6 @@ var step: number = 0;
 var config;
 var colorConfig;
 var colorPicker;
-var shirtTexture = THREE.ImageUtils.loadTexture( "../../Assets/Textures/plaid.jpg" );
 
 function init() {
     // Instantiate a new Scene object
@@ -83,18 +96,26 @@ function init() {
     
     config = function(){this.color = "#000000";}
     colorConfig = new config();
+    
+    planetFriezaPivot = new THREE.Object3D();
+    planetVegeta = new THREE.Object3D();
+    planetNamek = new THREE.Object3D();
+    planetHera = new THREE.Object3D();
+    planetKai = new THREE.Object3D();
+    planetFrieza = new THREE.Object3D();
+    moon79 = new THREE.Object3D();
      
     //Add a Sphere (sun)
-    sphere = new SphereGeometry(5, 50, 50);
+    sun = new SphereGeometry(5, 50, 50);
     sunMaterial = new LambertMaterial({ color: 0x000000 });
-    sphere = new Mesh(sphere, sunMaterial);
-    sphere.castShadow = true;
-    sphere.position.x = 0;
-    sphere.position.y = 0;
-    sphere.position.z = 0;
-    scene.add(sphere);
+    sun = new Mesh(sun, sunMaterial);
+    sun.castShadow = true;
+    sun.position.x = 0;
+    sun.position.y = 0;
+    sun.position.z = 0;
+    scene.add(sun);
     
-    //Add a Sphere ()
+/*    //Add a Sphere ()
     sphere = new SphereGeometry(5, 10, 10);
     sphereMaterial = new LambertMaterial({ color: 0x000000 });
     sphere = new Mesh(sphere, sphereMaterial);
@@ -102,67 +123,76 @@ function init() {
     sphere.position.x = 0;
     sphere.position.y = 30;
     sphere.position.z = 0;
-    scene.add(sphere);
+    scene.add(sphere);*/
     
     //Add a Sphere (planet vegeta)
-    sphere = new SphereGeometry(3, 10, 10);
+    vegeta = new SphereGeometry(3, 10, 10);
     vegetaMaterial = new LambertMaterial({ color: 0x0B2161 });
-    sphere = new Mesh(sphere, vegetaMaterial);
-    sphere.castShadow = true;
-    sphere.position.x = 0;
-    sphere.position.y = 0;
-    sphere.position.z = 15;
-    scene.add(sphere);
+    vegeta = new Mesh(vegeta, vegetaMaterial);
+    vegeta.castShadow = true;
+    vegeta.position.x = 0;
+    vegeta.position.y = 10;
+    vegeta.position.z = 50;
+    planetVegeta.add(vegeta);
+    scene.add(planetVegeta);
     
     //Add a Sphere (planet namek)
-    sphere = new SphereGeometry(4, 16, 16);
+    namek = new SphereGeometry(4, 16, 16);
     namekMaterial = new LambertMaterial({ color: 0x3ADF00 });
-    sphere = new Mesh(sphere, namekMaterial);
-    sphere.castShadow = true;
-    sphere.position.x = 0;
-    sphere.position.y = 20;
-    sphere.position.z = 0;
-    scene.add(sphere);
+    namek = new Mesh(namek, namekMaterial);
+    namek.castShadow = true;
+    namek.position.x = 0;
+    namek.position.y = 5;
+    namek.position.z = 15;
+    planetNamek.add(namek);
+    scene.add(planetNamek);
     
     //Add a Sphere (kai's planet)
-    sphere = new SphereGeometry(2, 5, 5);
+    kai = new SphereGeometry(2, 5, 5);
     kaiMaterial = new LambertMaterial({ color: 0xF7FE2E });
-    sphere = new Mesh(sphere, kaiMaterial);
-    sphere.castShadow = true;
-    sphere.position.x = 0;
-    sphere.position.y = 10;
-    sphere.position.z = 0;
-    scene.add(sphere);
+    kai = new Mesh(kai, kaiMaterial);
+    kai.castShadow = true;
+    kai.position.x = 0;
+    kai.position.y = -25;
+    kai.position.z = 25;
+    planetKai.add(kai);
+    scene.add(planetKai);
     
     //Add a Sphere (planet hera)
-    sphere = new SphereGeometry(2, 5, 5);
+    hera = new SphereGeometry(2, 5, 5);
     heraMaterial = new LambertMaterial({ color: 0xFE2E64 });
-    sphere = new Mesh(sphere, heraMaterial);
-    sphere.castShadow = true;
-    sphere.position.x = 0;
-    sphere.position.y = 0;
-    sphere.position.z = 8;
-    scene.add(sphere);
+    hera = new Mesh(hera, heraMaterial);
+    hera.castShadow = true;
+    hera.position.x = 0;
+    hera.position.y = 0;
+    hera.position.z = 8;
+    planetHera.add(hera);
+    scene.add(planetHera);
+    
     
     //Add a Sphere (planet frieza)
-    sphere = new SphereGeometry(4, 8, 8);
+    frieza = new SphereGeometry(4, 8, 8);
     friezaMaterial = new LambertMaterial({ color: 0x5882FA });
-    sphere = new Mesh(sphere, friezaMaterial);
-    sphere.castShadow = true;
-    sphere.position.x = 0;
-    sphere.position.y = 0;
-    sphere.position.z = 30;
-    scene.add(sphere);
+    frieza = new Mesh(frieza, friezaMaterial);
+    frieza.castShadow = true;
+    planetFrieza.position.x = 0;
+    planetFrieza.position.y = 0;
+    planetFrieza.position.z = 30;
+    planetFrieza.add(frieza);
+    planetFriezaPivot.add(planetFrieza);
+    scene.add(planetFriezaPivot);
     
     //Add a Sphere (frieza's moon)
-    sphere = new SphereGeometry(1, 10, 10);
+    fmoon79 = new SphereGeometry(1, 10, 10);
     moon79Material = new LambertMaterial({ color: 0xF8E0E0 });
-    sphere = new Mesh(sphere, moon79Material);
-    sphere.castShadow = true;
-    sphere.position.x = 0;
-    sphere.position.y = 0;
-    sphere.position.z = 24;
-    scene.add(sphere);
+    fmoon79 = new Mesh(fmoon79, moon79Material);
+    fmoon79.castShadow = true;
+    fmoon79.position.x = 0;
+    fmoon79.position.y = 0;
+    fmoon79.position.z = 7;
+    moon79.add(fmoon79);
+    planetFrieza.add(moon79);
+
     
     // Add an AmbientLight to the scene
     ambientLight = new AmbientLight(0x0c0c0c);
@@ -171,7 +201,7 @@ function init() {
 	
     // Add a SpotLight to the scene
     spotLight = new SpotLight(0xffffff, 1.0, Math.PI/3);
-    spotLight.position.set(0, 0, 0);
+    spotLight.position.set(-500, 0, 0);
     spotLight.castShadow = true;
     scene.add(spotLight);
     console.log("Added a SpotLight Light to Scene");
@@ -246,6 +276,16 @@ function gameLoop(): void {
             threeObject.rotation.z += control.rotationSpeedZ;
     });*/
     
+    planetVegeta.rotation.y += 0.01;
+    planetVegeta.rotation.z -= 0.002;
+    planetKai.rotation.y += 0.008;
+    planetKai.rotation.z += 0.01;
+    planetHera.rotation.y += 0.02;
+    planetNamek.rotation.y += 0.007;
+    planetNamek.rotation.z += 0.007;
+    planetFrieza.rotation.y += 0.009;
+    planetFriezaPivot.rotation.y += 0.005;
+    
     // render using requestAnimationFrame
     requestAnimationFrame(gameLoop);
 	
@@ -265,7 +305,7 @@ function setupRenderer(): void {
 // Setup main camera for the scene
 function setupCamera(): void {
     camera = new PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, 1000);
-    camera.position.x = -50;
+    camera.position.x = -70;
     camera.position.y = 2;
     camera.position.z = 2;
     camera.lookAt(scene.position);
