@@ -1,13 +1,13 @@
 {
-  "name": "comp392lesson02-part2",
+  "name": "comp392 Assignment 2",
   "authors": [
-    "Tom Tsiliopoulos <tsiliopoulos@hotmail.com>"
+    "Jacky Zhang"
   ],
-  "description": "COMP392Lesson02-Part2 for Advanced Graphics",
+  "description": "Solar System",
   "main": "",
   "moduleType": [],
   "license": "MIT",
-  "homepage": "http://github.com/CentennialCollege/COMP392-Lesson01-Part2",
+  "homepage": "https://github.com/ValiantZhang/COMP392-Assignment2",
   "ignore": [
     "**/.*",
     "bower_components",
