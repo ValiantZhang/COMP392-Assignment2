@@ -8,15 +8,15 @@ module objects {
         private _planeHeight: number;
         
         // PUBLIC INSTANCE VARIABLES
-        public rotationSpeedX: number;
+        /*public rotationSpeedX: number;
         public rotationSpeedY: number;
-        public rotationSpeedZ: number;
+        public rotationSpeedZ: number;*/
         //public numberOfObjects: number;
         // CONSTRUCTOR ++++++++++++++++++++++++++++++++++++++++
-        constructor(rotationSpeedX: number, rotationSpeedY: number, rotationSpeedZ: number, planeWidth: number, planeHeight: number) {
-            this.rotationSpeedX = rotationSpeedX;
+        constructor(planeWidth: number, planeHeight: number) {
+            /*this.rotationSpeedX = rotationSpeedX;
             this.rotationSpeedY = rotationSpeedY;
-            this.rotationSpeedZ = rotationSpeedZ;
+            this.rotationSpeedZ = rotationSpeedZ;*/
             //this.numberOfObjects = scene.children.length;
             this._planeWidth = planeWidth;
             this._planeHeight = planeHeight;
@@ -24,6 +24,19 @@ module objects {
 
 
         //PUBLIC METHODS ++++++++++++++++++++++++++++++++++++++++
+        
+        //Change Camera Method
+        public focusMoon(): void {
+            camera.position.set(planetFrieza.position.x, planetFrieza.position.y + 30, planetFrieza.position.z - 50);
+            isFollowingMoonPlanet = true;
+        }
+        
+        public viewSolarSystem(): void {
+            isFollowingMoonPlanet = false;
+            camera.position.set(-70, 2, 2);
+            camera.lookAt(scene.position);
+        }
+        
         
         // Remove Cube Method +++++++++++++++++++++++++++++++++
         /*public removeCube(): void {

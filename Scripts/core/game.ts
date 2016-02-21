@@ -65,6 +65,8 @@ var step: number = 0;
 var config;
 var colorConfig;
 var colorPicker;
+var isFollowingMoonPlanet: false;
+var focusVector = new THREE.Vector3();
 
 function init() {
     // Instantiate a new Scene object
@@ -75,8 +77,8 @@ function init() {
     setupCamera(); // setup the camera
     
     //scene.fog=new THREE.FogExp2( 0xffffff, 0.015 );
-    scene.fog=new THREE.Fog( 0xffffff, 0.015, 100 );
-    console.log("Added Fog to scene...");
+/*    scene.fog=new THREE.Fog( 0xffffff, 0.015, 100 );
+    console.log("Added Fog to scene...");*/
 	
     // add an axis helper to the scene
     axes = new AxisHelper(20);
@@ -107,13 +109,21 @@ function init() {
      
     //Add a Sphere (sun)
     sun = new SphereGeometry(5, 50, 50);
-    sunMaterial = new LambertMaterial({ color: 0x000000 });
+    sunMaterial = new LambertMaterial({  color: 0xffff00, emissive: 0x808000  });
     sun = new Mesh(sun, sunMaterial);
     sun.castShadow = true;
     sun.position.x = 0;
     sun.position.y = 0;
     sun.position.z = 0;
+    
+    //Add Light to the Sun
+    pointLight = new PointLight(0xffff00, 1.0, 100);
+    pointLight.position.set(0, 0, 0);
+    pointLight.castShadow = true;
+    sun.add(pointLight);
+    
     scene.add(sun);
+    
     
 /*    //Add a Sphere ()
     sphere = new SphereGeometry(5, 10, 10);
@@ -199,12 +209,12 @@ function init() {
     scene.add(ambientLight);
     console.log("Added an Ambient Light to Scene");
 	
-    // Add a SpotLight to the scene
+/*    // Add a SpotLight to the scene
     spotLight = new SpotLight(0xffffff, 1.0, Math.PI/3);
     spotLight.position.set(-500, 0, 0);
     spotLight.castShadow = true;
     scene.add(spotLight);
-    console.log("Added a SpotLight Light to Scene");
+    console.log("Added a SpotLight Light to Scene");*/
     
     // add controls
     gui = new GUI();
@@ -231,10 +241,7 @@ function onResize(): void {
 
 
 function addControl(controlObject: Control): void {
-    gui.add(controlObject, 'rotationSpeedX', -0.5, 0.5);
-    gui.add(controlObject, 'rotationSpeedY', -0.5, 0.5);
-    gui.add(controlObject, 'rotationSpeedZ', -0.5, 0.5);
-    
+
 /*    colorPicker = gui.addColor( colorConfig, 'color').onChange(
         function(getColor){
             //getColor=getColor.replace( '#','0x' );
@@ -250,7 +257,8 @@ function addControl(controlObject: Control): void {
             console.log(getColor);
         });*/
 
-    //gui.add(controlObject, 'addsphere');
+    gui.add(controlObject, 'focusMoon');
+    gui.add(controlObject, 'viewSolarSystem');
     //gui.add(controlObject, 'removesphere');
     //gui.add(controlObject, 'outputObjects');
     //gui.add(controlObject, 'numberOfObjects').listen();
@@ -269,7 +277,7 @@ function addStatsObject() {
 function gameLoop(): void {
     stats.update();
     
-/*    scene.traverse(function(threeObject:THREE.Object3D) {
+/*   scene.traverse(function(threeObject:THREE.Object3D) {
         if (threeObject == blobbyBoy) {
             threeObject.rotation.x += control.rotationSpeedX;
             threeObject.rotation.y += control.rotationSpeedY;
@@ -285,6 +293,13 @@ function gameLoop(): void {
     planetNamek.rotation.z += 0.007;
     planetFrieza.rotation.y += 0.009;
     planetFriezaPivot.rotation.y += 0.005;
+    
+    scene.updateMatrixWorld();
+    focusVector.setFromMatrixPosition( planetFrieza.matrixWorld );
+    
+    if (isFollowingMoonPlanet == true){
+        camera.lookAt(focusVector);
+    }
     
     // render using requestAnimationFrame
     requestAnimationFrame(gameLoop);
