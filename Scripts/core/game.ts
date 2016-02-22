@@ -10,6 +10,7 @@ import BoxGeometry = THREE.BoxGeometry;
 import sphereGeometry = THREE.sphereGeometry;
 import PlaneGeometry = THREE.PlaneGeometry;
 import SphereGeometry = THREE.SphereGeometry;
+import RingGeometry = THREE.TorusGeometry;
 import AxisHelper = THREE.AxisHelper;
 import LambertMaterial = THREE.MeshLambertMaterial;
 import MeshBasicMaterial = THREE.MeshBasicMaterial;
@@ -49,6 +50,7 @@ var vegetaMaterial : MeshLambertMaterial;
 var namekMaterial : MeshLambertMaterial;
 var kaiMaterial : MeshLambertMaterial;
 var heraMaterial : MeshLambertMaterial;
+var heraRingMaterial : MeshLambertMaterial;
 var friezaMaterial : MeshLambertMaterial;
 var moon79Material : MeshLambertMaterial;
 var shirtTexture = THREE.ImageUtils.loadTexture( "../../Assets/Textures/plaid.jpg" );
@@ -103,6 +105,7 @@ function init() {
     planetVegeta = new THREE.Object3D();
     planetNamek = new THREE.Object3D();
     planetHera = new THREE.Object3D();
+    planetHeraRing = new THREE.Object3D();
     planetKai = new THREE.Object3D();
     planetFrieza = new THREE.Object3D();
     moon79 = new THREE.Object3D();
@@ -175,8 +178,20 @@ function init() {
     hera.castShadow = true;
     hera.position.x = 0;
     hera.position.y = 0;
-    hera.position.z = 8;
+    hera.position.z = 40;
     planetHera.add(hera);
+    
+    //Add Hera's Ring
+    heraRing = new RingGeometry(4, 0.7, 2, 30);
+    heraRingMaterial = new LambertMaterial({color: 0xFE2E64, map:THREE.ImageUtils.loadTexture( "../../Assets/Textures/Planets/asteroidBelt.jpg" )});
+    heraRing = new Mesh(heraRing, heraRingMaterial);
+    heraRing.castShadow = true;
+    heraRing.rotation.x = 90;
+    heraRing.position.z = 40;
+    
+    planetHeraRing.add(heraRing);
+    planetHera.add(planetHeraRing);
+    
     scene.add(planetHera);
     
     
@@ -288,7 +303,8 @@ function gameLoop(): void {
     planetVegeta.rotation.z -= 0.002;
     planetKai.rotation.y += 0.008;
     planetKai.rotation.z += 0.01;
-    planetHera.rotation.y += 0.02;
+    planetHera.rotation.y += 0.004;
+    heraRing.rotation.z += 0.1;
     planetNamek.rotation.y += 0.007;
     planetNamek.rotation.z += 0.007;
     planetFrieza.rotation.y += 0.009;
