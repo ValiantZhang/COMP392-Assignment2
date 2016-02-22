@@ -161,7 +161,7 @@ function init() {
     scene.add(planetHera);
     //Add a Sphere (planet frieza)
     frieza = new SphereGeometry(4, 8, 8);
-    friezaMaterial = new LambertMaterial({ color: 0x5882FA });
+    friezaMaterial = new LambertMaterial({ color: 0x5882FA, map:THREE.ImageUtils.loadTexture( "../../Assets/Textures/Planets/ice.jpg" ) });
     frieza = new Mesh(frieza, friezaMaterial);
     frieza.castShadow = true;
     planetFrieza.position.x = 0;
