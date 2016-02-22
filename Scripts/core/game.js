@@ -55,6 +55,7 @@ var colorConfig;
 var colorPicker;
 var isFollowingMoonPlanet = false;
 var focusVector = new THREE.Vector3();
+var cameraControls;
 function init() {
     // Instantiate a new Scene object
     scene = new Scene();
@@ -239,6 +240,7 @@ function addStatsObject() {
 // Setup main game loop
 function gameLoop() {
     stats.update();
+    cameraControls.update();
     /*   scene.traverse(function(threeObject:THREE.Object3D) {
             if (threeObject == blobbyBoy) {
                 threeObject.rotation.x += control.rotationSpeedX;
@@ -280,5 +282,7 @@ function setupCamera() {
     camera.position.y = 2;
     camera.position.z = 2;
     camera.lookAt(scene.position);
+    cameraControls = new THREE.TrackballControls(camera, renderer.domElement);
+    cameraControls.target.set(0, 0, 0);
     console.log("Finished setting up Camera...");
 }

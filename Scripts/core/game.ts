@@ -22,6 +22,7 @@ import Control = objects.Control;
 import GUI = dat.GUI;
 import Color = THREE.Color;
 import Vector3 = THREE.Vector3;
+import CameraController = THREE.TrackballControls;
 
 //Custom Game Objects
 import gameObject = objects.gameObject;
@@ -69,6 +70,7 @@ var colorConfig;
 var colorPicker;
 var isFollowingMoonPlanet: false;
 var focusVector = new THREE.Vector3();
+var cameraControls;
 
 function init() {
     // Instantiate a new Scene object
@@ -291,6 +293,7 @@ function addStatsObject() {
 // Setup main game loop
 function gameLoop(): void {
     stats.update();
+    cameraControls.update();
     
 /*   scene.traverse(function(threeObject:THREE.Object3D) {
         if (threeObject == blobbyBoy) {
@@ -340,5 +343,7 @@ function setupCamera(): void {
     camera.position.y = 2;
     camera.position.z = 2;
     camera.lookAt(scene.position);
+    cameraControls = new THREE.TrackballControls(camera, renderer.domElement);
+    cameraControls.target.set(0,0,0);
     console.log("Finished setting up Camera...");
 }
