@@ -142,7 +142,7 @@ function init() {
     
     //Add a Sphere (planet vegeta)
     vegeta = new SphereGeometry(3, 10, 10);
-    vegetaMaterial = new LambertMaterial({ color: 0x0B2161 });
+    vegetaMaterial = new LambertMaterial({ color: 0x0B2161, map:THREE.ImageUtils.loadTexture( "../../Assets/Textures/Planets/metal.jpg" });
     vegeta = new Mesh(vegeta, vegetaMaterial);
     vegeta.castShadow = true;
     vegeta.position.x = 0;
@@ -153,7 +153,7 @@ function init() {
     
     //Add a Sphere (planet namek)
     namek = new SphereGeometry(4, 16, 16);
-    namekMaterial = new LambertMaterial({ color: 0x3ADF00 });
+    namekMaterial = new LambertMaterial({ color: 0x3ADF00, map:THREE.ImageUtils.loadTexture( "../../Assets/Textures/Planets/forest.jpg" });
     namek = new Mesh(namek, namekMaterial);
     namek.castShadow = true;
     namek.position.x = 0;
@@ -164,7 +164,7 @@ function init() {
     
     //Add a Sphere (kai's planet)
     kai = new SphereGeometry(2, 5, 5);
-    kaiMaterial = new LambertMaterial({ color: 0xF7FE2E });
+    kaiMaterial = new LambertMaterial({ color: 0xF7FE2E, map:THREE.ImageUtils.loadTexture( "../../Assets/Textures/Planets/fluffy.jpg" });
     kai = new Mesh(kai, kaiMaterial);
     kai.castShadow = true;
     kai.position.x = 0;
@@ -175,7 +175,7 @@ function init() {
     
     //Add a Sphere (planet hera)
     hera = new SphereGeometry(2, 5, 5);
-    heraMaterial = new LambertMaterial({ color: 0xFE2E64 });
+    heraMaterial = new LambertMaterial({ color: 0xFE2E64, map:THREE.ImageUtils.loadTexture( "../../Assets/Textures/Planets/bones.jpg" ) });
     hera = new Mesh(hera, heraMaterial);
     hera.castShadow = true;
     hera.position.x = 0;
@@ -211,7 +211,7 @@ function init() {
     
     //Add a Sphere (frieza's moon)
     fmoon79 = new SphereGeometry(1, 10, 10);
-    moon79Material = new LambertMaterial({ color: 0xF8E0E0 });
+    moon79Material = new LambertMaterial({ color: 0xF8E0E0, map:THREE.ImageUtils.loadTexture( "../../Assets/Textures/Planets/foam.jpg" ) });
     fmoon79 = new Mesh(fmoon79, moon79Material);
     fmoon79.castShadow = true;
     fmoon79.position.x = 0;
