@@ -113,7 +113,7 @@ function init() {
         scene.add(sphere);*/
     //Add a Sphere (planet vegeta)
     vegeta = new SphereGeometry(3, 10, 10);
-    vegetaMaterial = new LambertMaterial({ color: 0x0B2161, map: THREE.ImageUtils.loadTexture("../../Assets/Textures/Planets/metal.jpg") });
+    vegetaMaterial = new LambertMaterial({ color: 0xBADAEB, map: THREE.ImageUtils.loadTexture("../../Assets/Textures/Planets/metal.jpg") });
     vegeta = new Mesh(vegeta, vegetaMaterial);
     vegeta.castShadow = true;
     vegeta.position.x = 0;
