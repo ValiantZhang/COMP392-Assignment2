@@ -89,14 +89,14 @@ function init() {
     moon79 = new THREE.Object3D();
     //Add a Sphere (sun)
     sun = new SphereGeometry(5, 50, 50);
-    sunMaterial = new LambertMaterial({ color: 0xffff66, map: THREE.ImageUtils.loadTexture("../../Assets/Textures/Planets/gas.png") });
+    sunMaterial = new LambertMaterial({ color: 0xffff66, emissive: 0x808000 });
     sun = new Mesh(sun, sunMaterial);
     sun.castShadow = true;
     sun.position.x = 0;
     sun.position.y = 0;
     sun.position.z = 0;
     //Add Light to the Sun
-    pointLight = new PointLight(0xffff00, 10.0, 100);
+    pointLight = new PointLight(0xffff00, 1.5, 100);
     pointLight.position.set(0, 0, 0);
     pointLight.castShadow = true;
     sun.add(pointLight);
