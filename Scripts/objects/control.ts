@@ -8,16 +8,9 @@ module objects {
         private _planeHeight: number;
         
         // PUBLIC INSTANCE VARIABLES
-        /*public rotationSpeedX: number;
-        public rotationSpeedY: number;
-        public rotationSpeedZ: number;*/
-        //public numberOfObjects: number;
+
         // CONSTRUCTOR ++++++++++++++++++++++++++++++++++++++++
         constructor(planeWidth: number, planeHeight: number) {
-            /*this.rotationSpeedX = rotationSpeedX;
-            this.rotationSpeedY = rotationSpeedY;
-            this.rotationSpeedZ = rotationSpeedZ;*/
-            //this.numberOfObjects = scene.children.length;
             this._planeWidth = planeWidth;
             this._planeHeight = planeHeight;
         }
@@ -26,11 +19,13 @@ module objects {
         //PUBLIC METHODS ++++++++++++++++++++++++++++++++++++++++
         
         //Change Camera Method
+        //focus on the one with the moon
         public focusMoon(): void {
             camera.position.set(planetFrieza.position.x, planetFrieza.position.y + 30, planetFrieza.position.z - 50);
             isFollowingMoonPlanet = true;
         }
         
+        //focus back on the entire solar system
         public viewSolarSystem(): void {
             isFollowingMoonPlanet = false;
             camera.position.set(-70, 2, 2);

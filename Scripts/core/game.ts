@@ -87,7 +87,6 @@ function init() {
     // add an axis helper to the scene
     axes = new AxisHelper(20);
     scene.add(axes);
-    console.log("Added Axis Helper to scene...");
     
     //Add a Plane to the Scene
 /*    plane = new gameObject(
@@ -114,7 +113,7 @@ function init() {
      
     //Add a Sphere (sun)
     sun = new SphereGeometry(5, 50, 50);
-    sunMaterial = new LambertMaterial({  color: 0xffff00, emissive: 0x808000  });
+    sunMaterial = new LambertMaterial({  color: 0xffff00, emissive: 0x808000, map:THREE.ImageUtils.loadTexture( "../../Assets/Textures/Planets/gas.png" }  });
     sun = new Mesh(sun, sunMaterial);
     sun.castShadow = true;
     sun.position.x = 0;
@@ -128,17 +127,6 @@ function init() {
     sun.add(pointLight);
     
     scene.add(sun);
-    
-    
-/*    //Add a Sphere ()
-    sphere = new SphereGeometry(5, 10, 10);
-    sphereMaterial = new LambertMaterial({ color: 0x000000 });
-    sphere = new Mesh(sphere, sphereMaterial);
-    sphere.castShadow = true;
-    sphere.position.x = 0;
-    sphere.position.y = 30;
-    sphere.position.z = 0;
-    scene.add(sphere);*/
     
     //Add a Sphere (planet vegeta)
     vegeta = new SphereGeometry(3, 10, 10);
@@ -224,28 +212,20 @@ function init() {
     // Add an AmbientLight to the scene
     ambientLight = new AmbientLight(0x0c0c0c);
     scene.add(ambientLight);
-    console.log("Added an Ambient Light to Scene");
-	
-/*    // Add a SpotLight to the scene
-    spotLight = new SpotLight(0xffffff, 1.0, Math.PI/3);
-    spotLight.position.set(-500, 0, 0);
-    spotLight.castShadow = true;
-    scene.add(spotLight);
-    console.log("Added a SpotLight Light to Scene");*/
     
     // add controls
     gui = new GUI();
     control = new Control(0.0, 0.0, 0.0);
     addControl(control);
-
-    console.log("Added Control to scene...");
     
     // Add framerate stats
     addStatsObject();
     console.log("Added Stats to scene...");
 
     document.body.appendChild(renderer.domElement);
-    gameLoop(); // render the scene	
+    
+    // render the scene	
+    gameLoop();
     
     window.addEventListener('resize', onResize, false);
 }
@@ -258,21 +238,6 @@ function onResize(): void {
 
 
 function addControl(controlObject: Control): void {
-
-/*    colorPicker = gui.addColor( colorConfig, 'color').onChange(
-        function(getColor){
-            //getColor=getColor.replace( '#','0x' );
-            sunMaterial.color =  new THREE.Color(getColor);
-            vegetaMaterial.color = new THREE.Color(getColor);
-            namekMaterial.color = new THREE.Color(getColor);
-            kaiMaterial.color =  new THREE.Color(getColor);
-            heraMaterial.color = new THREE.Color(getColor);
-            friezaMaterial.color =  new THREE.Color(getColor);
-            moon79Material.color = new THREE.Color(getColor);
-            leftFootMaterial.color =  new THREE.Color(getColor);
-            rightFootMaterial.color = new THREE.Color(getColor);
-            console.log(getColor);
-        });*/
 
     gui.add(controlObject, 'focusMoon');
     gui.add(controlObject, 'viewSolarSystem');
@@ -295,13 +260,6 @@ function gameLoop(): void {
     stats.update();
     cameraControls.update();
     
-/*   scene.traverse(function(threeObject:THREE.Object3D) {
-        if (threeObject == blobbyBoy) {
-            threeObject.rotation.x += control.rotationSpeedX;
-            threeObject.rotation.y += control.rotationSpeedY;
-            threeObject.rotation.z += control.rotationSpeedZ;
-    });*/
-    
     planetVegeta.rotation.y += 0.01;
     planetVegeta.rotation.z -= 0.002;
     planetKai.rotation.y += 0.008;
@@ -313,9 +271,12 @@ function gameLoop(): void {
     planetFrieza.rotation.y += 0.009;
     planetFriezaPivot.rotation.y += 0.005;
     
+    //update position for camera tracking
     scene.updateMatrixWorld();
     focusVector.setFromMatrixPosition( planetFrieza.matrixWorld );
     
+    
+    //boolean for following planet w/ moon, prob do a dropdown later for tracking other planets
     if (isFollowingMoonPlanet == true){
         camera.lookAt(focusVector);
     }
