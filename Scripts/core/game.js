@@ -56,11 +56,19 @@ var colorPicker;
 var isFollowingMoonPlanet = false;
 var focusVector = new THREE.Vector3();
 var cameraControls;
+var zoomText = document.createElement('div');
 function init() {
     // Instantiate a new Scene object
     scene = new Scene();
     setupRenderer(); // setup the default renderer
     setupCamera(); // setup the camera
+    zoomText.style.position = 'absolute';
+    zoomText.innerHTML = 'Use the "Scroll Wheel" to zoom in and out.';
+    zoomText.style.color = "white";
+    zoomText.style.width = 100;
+    zoomText.style.height = 100;
+    zoomText.style.left = 40 + '%';
+    document.body.appendChild(zoomText);
     //scene.fog=new THREE.FogExp2( 0xffffff, 0.015 );
     /*    scene.fog=new THREE.Fog( 0xffffff, 0.015, 100 );
         console.log("Added Fog to scene...");*/
