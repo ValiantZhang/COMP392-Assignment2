@@ -41,7 +41,7 @@ var heraMaterial;
 var heraRingMaterial;
 var friezaMaterial;
 var moon79Material;
-var shirtTexture = THREE.ImageUtils.loadTexture("../../Assets/Textures/plaid.jpg");
+//var shirtTexture = THREE.ImageUtils.loadTexture( "../../Assets/Textures/plaid.jpg" );
 //Lights
 var ambientLight;
 var spotLight;
@@ -90,103 +90,102 @@ function init() {
     //Add a Sphere (sun)
     sun = new SphereGeometry(5, 50, 50);
     sunMaterial = new LambertMaterial({ color: 0x808000, emissive: 0x808000, map: THREE.ImageUtils.loadTexture("../../Assets/Textures/Planets/gas.png") });
+    sun = new Mesh(sun, sunMaterial);
+    sun.castShadow = true;
+    sun.position.x = 0;
+    sun.position.y = 0;
+    sun.position.z = 0;
+    //Add Light to the Sun
+    pointLight = new PointLight(0xffff00, 2.0, 100);
+    pointLight.position.set(0, 0, 0);
+    pointLight.castShadow = true;
+    sun.add(pointLight);
+    scene.add(sun);
+    //Add a Sphere (planet vegeta)
+    vegeta = new SphereGeometry(3, 10, 10);
+    vegetaMaterial = new LambertMaterial({ color: 0xBADAEB, map: THREE.ImageUtils.loadTexture("../../Assets/Textures/Planets/metal.jpg") });
+    vegeta = new Mesh(vegeta, vegetaMaterial);
+    vegeta.castShadow = true;
+    vegeta.position.x = 0;
+    vegeta.position.y = 10;
+    vegeta.position.z = 50;
+    planetVegeta.add(vegeta);
+    scene.add(planetVegeta);
+    //Add a Sphere (planet namek)
+    namek = new SphereGeometry(4, 16, 16);
+    namekMaterial = new LambertMaterial({ color: 0x3ADF00, map: THREE.ImageUtils.loadTexture("../../Assets/Textures/Planets/forest.jpg") });
+    namek = new Mesh(namek, namekMaterial);
+    namek.castShadow = true;
+    namek.position.x = 0;
+    namek.position.y = 5;
+    namek.position.z = 15;
+    planetNamek.add(namek);
+    scene.add(planetNamek);
+    //Add a Sphere (kai's planet)
+    kai = new SphereGeometry(2, 5, 5);
+    kaiMaterial = new LambertMaterial({ color: 0xF7FE2E, map: THREE.ImageUtils.loadTexture("../../Assets/Textures/Planets/fluffy.jpg") });
+    kai = new Mesh(kai, kaiMaterial);
+    kai.castShadow = true;
+    kai.position.x = 0;
+    kai.position.y = -25;
+    kai.position.z = 25;
+    planetKai.add(kai);
+    scene.add(planetKai);
+    //Add a Sphere (planet hera)
+    hera = new SphereGeometry(2, 5, 5);
+    heraMaterial = new LambertMaterial({ color: 0xFE2E64, map: THREE.ImageUtils.loadTexture("../../Assets/Textures/Planets/bones.jpg") });
+    hera = new Mesh(hera, heraMaterial);
+    hera.castShadow = true;
+    hera.position.x = 0;
+    hera.position.y = 0;
+    hera.position.z = 40;
+    planetHera.add(hera);
+    //Add Hera's Ring
+    heraRing = new RingGeometry(4, 0.7, 2, 30);
+    heraRingMaterial = new LambertMaterial({ color: 0xFE2E64, map: THREE.ImageUtils.loadTexture("../../Assets/Textures/Planets/asteroidBelt.jpg") });
+    heraRing = new Mesh(heraRing, heraRingMaterial);
+    heraRing.castShadow = true;
+    heraRing.rotation.x = 90;
+    heraRing.position.z = 40;
+    planetHeraRing.add(heraRing);
+    planetHera.add(planetHeraRing);
+    scene.add(planetHera);
+    //Add a Sphere (planet frieza)
+    frieza = new SphereGeometry(4, 8, 8);
+    friezaMaterial = new LambertMaterial({ color: 0x5882FA, map: THREE.ImageUtils.loadTexture("../../Assets/Textures/Planets/ice.jpg") });
+    frieza = new Mesh(frieza, friezaMaterial);
+    frieza.castShadow = true;
+    planetFrieza.position.x = 0;
+    planetFrieza.position.y = 0;
+    planetFrieza.position.z = 30;
+    planetFrieza.add(frieza);
+    planetFriezaPivot.add(planetFrieza);
+    scene.add(planetFriezaPivot);
+    //Add a Sphere (frieza's moon)
+    fmoon79 = new SphereGeometry(1, 10, 10);
+    moon79Material = new LambertMaterial({ color: 0xF8E0E0, map: THREE.ImageUtils.loadTexture("../../Assets/Textures/Planets/foam.jpg") });
+    fmoon79 = new Mesh(fmoon79, moon79Material);
+    fmoon79.castShadow = true;
+    fmoon79.position.x = 0;
+    fmoon79.position.y = 0;
+    fmoon79.position.z = 7;
+    moon79.add(fmoon79);
+    planetFrieza.add(moon79);
+    // Add an AmbientLight to the scene
+    ambientLight = new AmbientLight(0x0c0c0c);
+    scene.add(ambientLight);
+    // add controls
+    gui = new GUI();
+    control = new Control(0.0, 0.0, 0.0);
+    addControl(control);
+    // Add framerate stats
+    addStatsObject();
+    console.log("Added Stats to scene...");
+    document.body.appendChild(renderer.domElement);
+    // render the scene	
+    gameLoop();
+    window.addEventListener('resize', onResize, false);
 }
-;
-sun = new Mesh(sun, sunMaterial);
-sun.castShadow = true;
-sun.position.x = 0;
-sun.position.y = 0;
-sun.position.z = 0;
-//Add Light to the Sun
-pointLight = new PointLight(0xffff00, 1.0, 100);
-pointLight.position.set(0, 0, 0);
-pointLight.castShadow = true;
-sun.add(pointLight);
-scene.add(sun);
-//Add a Sphere (planet vegeta)
-vegeta = new SphereGeometry(3, 10, 10);
-vegetaMaterial = new LambertMaterial({ color: 0xBADAEB, map: THREE.ImageUtils.loadTexture("../../Assets/Textures/Planets/metal.jpg") });
-vegeta = new Mesh(vegeta, vegetaMaterial);
-vegeta.castShadow = true;
-vegeta.position.x = 0;
-vegeta.position.y = 10;
-vegeta.position.z = 50;
-planetVegeta.add(vegeta);
-scene.add(planetVegeta);
-//Add a Sphere (planet namek)
-namek = new SphereGeometry(4, 16, 16);
-namekMaterial = new LambertMaterial({ color: 0x3ADF00, map: THREE.ImageUtils.loadTexture("../../Assets/Textures/Planets/forest.jpg") });
-namek = new Mesh(namek, namekMaterial);
-namek.castShadow = true;
-namek.position.x = 0;
-namek.position.y = 5;
-namek.position.z = 15;
-planetNamek.add(namek);
-scene.add(planetNamek);
-//Add a Sphere (kai's planet)
-kai = new SphereGeometry(2, 5, 5);
-kaiMaterial = new LambertMaterial({ color: 0xF7FE2E, map: THREE.ImageUtils.loadTexture("../../Assets/Textures/Planets/fluffy.jpg") });
-kai = new Mesh(kai, kaiMaterial);
-kai.castShadow = true;
-kai.position.x = 0;
-kai.position.y = -25;
-kai.position.z = 25;
-planetKai.add(kai);
-scene.add(planetKai);
-//Add a Sphere (planet hera)
-hera = new SphereGeometry(2, 5, 5);
-heraMaterial = new LambertMaterial({ color: 0xFE2E64, map: THREE.ImageUtils.loadTexture("../../Assets/Textures/Planets/bones.jpg") });
-hera = new Mesh(hera, heraMaterial);
-hera.castShadow = true;
-hera.position.x = 0;
-hera.position.y = 0;
-hera.position.z = 40;
-planetHera.add(hera);
-//Add Hera's Ring
-heraRing = new RingGeometry(4, 0.7, 2, 30);
-heraRingMaterial = new LambertMaterial({ color: 0xFE2E64, map: THREE.ImageUtils.loadTexture("../../Assets/Textures/Planets/asteroidBelt.jpg") });
-heraRing = new Mesh(heraRing, heraRingMaterial);
-heraRing.castShadow = true;
-heraRing.rotation.x = 90;
-heraRing.position.z = 40;
-planetHeraRing.add(heraRing);
-planetHera.add(planetHeraRing);
-scene.add(planetHera);
-//Add a Sphere (planet frieza)
-frieza = new SphereGeometry(4, 8, 8);
-friezaMaterial = new LambertMaterial({ color: 0x5882FA, map: THREE.ImageUtils.loadTexture("../../Assets/Textures/Planets/ice.jpg") });
-frieza = new Mesh(frieza, friezaMaterial);
-frieza.castShadow = true;
-planetFrieza.position.x = 0;
-planetFrieza.position.y = 0;
-planetFrieza.position.z = 30;
-planetFrieza.add(frieza);
-planetFriezaPivot.add(planetFrieza);
-scene.add(planetFriezaPivot);
-//Add a Sphere (frieza's moon)
-fmoon79 = new SphereGeometry(1, 10, 10);
-moon79Material = new LambertMaterial({ color: 0xF8E0E0, map: THREE.ImageUtils.loadTexture("../../Assets/Textures/Planets/foam.jpg") });
-fmoon79 = new Mesh(fmoon79, moon79Material);
-fmoon79.castShadow = true;
-fmoon79.position.x = 0;
-fmoon79.position.y = 0;
-fmoon79.position.z = 7;
-moon79.add(fmoon79);
-planetFrieza.add(moon79);
-// Add an AmbientLight to the scene
-ambientLight = new AmbientLight(0x0c0c0c);
-scene.add(ambientLight);
-// add controls
-gui = new GUI();
-control = new Control(0.0, 0.0, 0.0);
-addControl(control);
-// Add framerate stats
-addStatsObject();
-console.log("Added Stats to scene...");
-document.body.appendChild(renderer.domElement);
-// render the scene	
-gameLoop();
-window.addEventListener('resize', onResize, false);
 function onResize() {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();

@@ -54,7 +54,7 @@ var heraMaterial : MeshLambertMaterial;
 var heraRingMaterial : MeshLambertMaterial;
 var friezaMaterial : MeshLambertMaterial;
 var moon79Material : MeshLambertMaterial;
-var shirtTexture = THREE.ImageUtils.loadTexture( "../../Assets/Textures/plaid.jpg" );
+//var shirtTexture = THREE.ImageUtils.loadTexture( "../../Assets/Textures/plaid.jpg" );
 
 //Lights
 var ambientLight: AmbientLight;
@@ -113,7 +113,7 @@ function init() {
      
     //Add a Sphere (sun)
     sun = new SphereGeometry(5, 50, 50);
-    sunMaterial = new LambertMaterial({  color: 0x808000, emissive: 0x808000, map:THREE.ImageUtils.loadTexture( "../../Assets/Textures/Planets/gas.png" }  });
+    sunMaterial = new LambertMaterial({  color: 0x808000, emissive: 0x808000, map:THREE.ImageUtils.loadTexture( "../../Assets/Textures/Planets/gas.png"   });
     sun = new Mesh(sun, sunMaterial);
     sun.castShadow = true;
     sun.position.x = 0;
