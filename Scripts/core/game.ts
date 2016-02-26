@@ -54,7 +54,6 @@ var heraMaterial : MeshLambertMaterial;
 var heraRingMaterial : MeshLambertMaterial;
 var friezaMaterial : MeshLambertMaterial;
 var moon79Material : MeshLambertMaterial;
-//var shirtTexture = THREE.ImageUtils.loadTexture( "../../Assets/Textures/plaid.jpg" );
 
 //Lights
 var ambientLight: AmbientLight;
@@ -81,6 +80,8 @@ function init() {
 	
     setupCamera(); // setup the camera
     
+    
+    //put text on top of website for zoom in instructions
     zoomText.style.position = 'absolute';
     zoomText.innerHTML = 'Use "Scroll Wheel" to zoom in and out.';
     zoomText.style.color = "white";
@@ -88,29 +89,15 @@ function init() {
     zoomText.style.height = 100;
     zoomText.style.left = 40 + '%';
     document.body.appendChild(zoomText);
-    
-    //scene.fog=new THREE.FogExp2( 0xffffff, 0.015 );
-/*    scene.fog=new THREE.Fog( 0xffffff, 0.015, 100 );
-    console.log("Added Fog to scene...");*/
 	
     // add an axis helper to the scene
     axes = new AxisHelper(20);
     scene.add(axes);
     
-    //Add a Plane to the Scene
-/*    plane = new gameObject(
-        new PlaneGeometry(60, 40, 1, 1),
-        new LambertMaterial({ color: 0xffffff }),
-        0, 0, 0);
-
-    plane.rotation.x = -0.5 * Math.PI;
-
-    scene.add(plane);
-    console.log("Added Plane Primitive to scene...");*/
-    
     config = function(){this.color = "#000000";}
     colorConfig = new config();
     
+    //scene objects
     planetFriezaPivot = new THREE.Object3D();
     planetVegeta = new THREE.Object3D();
     planetNamek = new THREE.Object3D();
@@ -250,9 +237,6 @@ function addControl(controlObject: Control): void {
 
     gui.add(controlObject, 'focusMoon');
     gui.add(controlObject, 'viewSolarSystem');
-    //gui.add(controlObject, 'removesphere');
-    //gui.add(controlObject, 'outputObjects');
-    //gui.add(controlObject, 'numberOfObjects').listen();
 }
 
 function addStatsObject() {
@@ -269,6 +253,8 @@ function gameLoop(): void {
     stats.update();
     cameraControls.update();
     
+    
+    //planet rotations
     planetVegeta.rotation.y += 0.01;
     planetVegeta.rotation.z -= 0.002;
     planetKai.rotation.y += 0.008;

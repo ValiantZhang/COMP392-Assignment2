@@ -41,7 +41,6 @@ var heraMaterial;
 var heraRingMaterial;
 var friezaMaterial;
 var moon79Material;
-//var shirtTexture = THREE.ImageUtils.loadTexture( "../../Assets/Textures/plaid.jpg" );
 //Lights
 var ambientLight;
 var spotLight;
@@ -62,31 +61,20 @@ function init() {
     scene = new Scene();
     setupRenderer(); // setup the default renderer
     setupCamera(); // setup the camera
+    //put text on top of website for zoom in instructions
     zoomText.style.position = 'absolute';
-    zoomText.innerHTML = 'Use the "Scroll Wheel" to zoom in and out.';
+    zoomText.innerHTML = 'Use "Scroll Wheel" to zoom in and out.';
     zoomText.style.color = "white";
     zoomText.style.width = 100;
     zoomText.style.height = 100;
     zoomText.style.left = 40 + '%';
     document.body.appendChild(zoomText);
-    //scene.fog=new THREE.FogExp2( 0xffffff, 0.015 );
-    /*    scene.fog=new THREE.Fog( 0xffffff, 0.015, 100 );
-        console.log("Added Fog to scene...");*/
     // add an axis helper to the scene
     axes = new AxisHelper(20);
     scene.add(axes);
-    //Add a Plane to the Scene
-    /*    plane = new gameObject(
-            new PlaneGeometry(60, 40, 1, 1),
-            new LambertMaterial({ color: 0xffffff }),
-            0, 0, 0);
-    
-        plane.rotation.x = -0.5 * Math.PI;
-    
-        scene.add(plane);
-        console.log("Added Plane Primitive to scene...");*/
     config = function () { this.color = "#000000"; };
     colorConfig = new config();
+    //scene objects
     planetFriezaPivot = new THREE.Object3D();
     planetVegeta = new THREE.Object3D();
     planetNamek = new THREE.Object3D();
@@ -202,9 +190,6 @@ function onResize() {
 function addControl(controlObject) {
     gui.add(controlObject, 'focusMoon');
     gui.add(controlObject, 'viewSolarSystem');
-    //gui.add(controlObject, 'removesphere');
-    //gui.add(controlObject, 'outputObjects');
-    //gui.add(controlObject, 'numberOfObjects').listen();
 }
 function addStatsObject() {
     stats = new Stats();
@@ -218,6 +203,7 @@ function addStatsObject() {
 function gameLoop() {
     stats.update();
     cameraControls.update();
+    //planet rotations
     planetVegeta.rotation.y += 0.01;
     planetVegeta.rotation.z -= 0.002;
     planetKai.rotation.y += 0.008;
